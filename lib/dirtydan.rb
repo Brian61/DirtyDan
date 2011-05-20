@@ -40,9 +40,9 @@
 #   
 #   def save
 #      if is_dirty?
-#        hide_dirty()
+#        hide_dirty() # only needed if using dump or similar
 #        ... code saving object state somewhere ...
-#        clean_dirty()
+#        clean_dirty() # only needed if not using hide_dirty
 #      end
 #    end
 #  end
