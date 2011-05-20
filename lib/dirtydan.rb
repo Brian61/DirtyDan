@@ -22,9 +22,9 @@
 #
 # is_dirty?() - returns true if and only if @dirty exists and is true
 #
-# clean_dirty() - removes the @dirty instance variable.
-#   The reason for removal of the variable instead of merely setting
-#    it false is to avoid unnecessary inclusion in dumps.
+# clean_dirty() - sets @dirty to false
+#
+# hide_dirty() - removes the @dirty instance variable.
 #
 # Usage
 # -------
@@ -40,9 +40,10 @@
 #   
 #   def save
 #      if is_dirty?
-#        clean_dirty()
+#        hide_dirty()
 #        ... code saving object state somewhere ...
-#       end
+#        clean_dirty()
+#      end
 #    end
 #  end
 #
@@ -72,7 +73,8 @@ module DirtyDan
   end
   def mark_dirty; @dirty = true; end
   def is_dirty?; !!@dirty; end
-  def clean_dirty; remove_instance_variable(:@dirty); end
+  def clean_dirty; @dirty = false; end
+  def hide_dirty; remove_instance_variable(:@dirty); end
 end
 
 # Unit tests
@@ -132,9 +134,9 @@ if __FILE__ == $0
       assert(!@tobj.is_dirty?)
     end
     
-    def test_clean_dirty_removes_dirty_variable
+    def test_hide_dirty_removes_dirty_variable
       @tobj.test1 = "any"
-      @tobj.clean_dirty
+      @tobj.hide_dirty
       assert(!@tobj.methods.include?(:@dirty))
     end
     
