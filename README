@@ -1,2 +1,5 @@
 DirtyDan
 A simple module for automation of object dirtiness tracking.
+
+Installation:
+gem install dirtydan
